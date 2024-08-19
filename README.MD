@@ -5,3 +5,4 @@ This plugin help to integrate any rest api to be integrated with wordpress as a 
 * API endpoints are configured inside `api` folder.
 * WordPress endpoints are configured inside `inc/rest.php` file
     
+
