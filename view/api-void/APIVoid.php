@@ -165,18 +165,19 @@ new class {
                 document.querySelector("#tableContainer").appendChild(container);
             }
 
-            // submit form
-            const form = document.querySelector('#api-void');
-            form.addEventListener("submit", async e => {
-                // clear previous tables and prevent default
-                e.preventDefault();
+            /**
+             * Process API  Void.
+             * This function will call api void to get data
+             * This function will save searching domain to database
+             * This function will call createTable function to manipulate DOM
+             * @returns {Promise<void>}
+             */
+            async function processAPIVoid(domain){
                 document.querySelector("#tableContainer").innerHTML = "";
-
                 // add loading effect
                 document.querySelector('#api-void input[type="submit"]').setAttribute("value", "Please Wait");
                 document.querySelector('#api-void input[type="submit"]').setAttribute("disabled", "");
 
-                const domain = e.target.domainSearch.value;
                 // call api-void
                 const res = await fetch("https://reportscammedfunds.com/wp-json/raw/v1/api-void?url=" + domain);
                 const result = await res.json();
@@ -206,6 +207,17 @@ new class {
                 } else {
                     createTable(result.error, result ?? {});
                 }
+            }
+            // submit form
+            /**
+             * @type HTMLFormElement
+             */
+            const form = document.querySelector('#api-void');
+            form.addEventListener("submit", e => {
+                // clear previous tables and prevent default
+                e.preventDefault();
+                const domain = e.target.domainSearch.value;
+                processAPIVoid(domain);
             });
 
             if(location.search !== ""){
@@ -214,12 +226,7 @@ new class {
                  */
                 const input = document.querySelector(`[name="domainSearch"]`);
                 input.value = location.search.split("?url=")[1];
-
-                /**
-                 * @type HTMLFormElement
-                 */
-                const form = document.querySelector('#api-void');
-                form.submit();
+                processAPIVoid(input.value);
             }
         </script>
         <?php
