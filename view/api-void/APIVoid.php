@@ -6,6 +6,7 @@ if (!defined("ABSPATH")) {
 new class {
     public function __construct()
     {
+        echo "testttttttttttttttttttttttttttt";
         add_shortcode("API_VOID_VIEWS", [$this, 'shortcode']);
     }
 
