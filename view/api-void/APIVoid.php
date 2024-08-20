@@ -314,7 +314,7 @@ new class {
         $table_prefix = $wpdb->prefix;
         $table_name = $table_prefix . "api_void_search_history";
 
-        $result = $wpdb->get_results("SELECT * FROM $table_name");
+        $result = $wpdb->get_results("SELECT * FROM $table_name ORDER BY time DESC");
         ob_start();
         if ($result === null) {
             echo "<h3>No data is stored</h3>";
