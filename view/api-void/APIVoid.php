@@ -339,6 +339,14 @@ new class {
                 border: 1px solid lightgreen;
                 border-radius: 8px;
             }
+            .reputation_domain_icon {
+                width: 15px;
+            }
+            div:has(>.reputation_domain_icon) {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
         </style>
         <div class="recent_reputation_checks">
             <div class="reputation_site">
