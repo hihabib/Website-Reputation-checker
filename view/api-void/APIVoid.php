@@ -217,6 +217,10 @@ new class {
 
         global $wpdb;
         $db_prefix = $wpdb -> prefix;
-        return rest_ensure_response(['prefix' =>"$db_prefix"]);
+        $table_name = $db_prefix . "api_void_search_history";
+        $is_inserted = $wpdb -> insert($table_name, [
+                'url' => 'test'
+        ]);
+        return rest_ensure_response(['test' =>"$is_inserted"]);
     }
 };
