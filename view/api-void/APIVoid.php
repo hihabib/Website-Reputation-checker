@@ -288,7 +288,7 @@ new class {
             $is_inserted = $wpdb->insert($table_name, $data_to_save);
             // rest response
             if ($is_inserted) {
-                return rest_ensure_response($data_to_save);
+                return rest_ensure_response(['updated'=> 'false', ...$data_to_save]);
             } else {
                 return new WP_Error('not_saved', 'something went wrong', ['status' => 500]);
             }
