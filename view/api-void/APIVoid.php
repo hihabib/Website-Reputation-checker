@@ -330,7 +330,7 @@ new class {
 
             .recent_reputation_checks {
                 display: flex;
-                justify-content: space-between;
+                justify-content: flex-start;
                 gap: var(--reputation-site-gap);
                 margin-bottom: 40px;
                 flex-wrap: wrap;
