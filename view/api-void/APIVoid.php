@@ -7,14 +7,14 @@ new class {
     public function __construct()
     {
         add_action('rest_api_init', [$this, 'register_api_void_rest_api']);
-        add_shortcode("API_VOID_VIEWS", [$this, 'shortcode']);
+        add_shortcode("API_VOID_VIEWS", [$this, 'api_void_short_code']);
     }
 
     /**
      * API Void output shortcode
      * @return false|string
      */
-    public function shortcode()
+    public function api_void_short_code()
     {
 
         ob_start();
@@ -288,7 +288,7 @@ new class {
             $is_inserted = $wpdb->insert($table_name, $data_to_save);
             // rest response
             if ($is_inserted) {
-                return rest_ensure_response(['updated'=> 'false', ...$data_to_save]);
+                return rest_ensure_response(['updated' => 'false', ...$data_to_save]);
             } else {
                 return new WP_Error('not_saved', 'something went wrong', ['status' => 500]);
             }
@@ -301,6 +301,64 @@ new class {
                 ]
             );
         }
+
+    }
+
+    /**
+     * @return string
+     */
+    public function recent_checks_shortcode()
+    {
+        global $wpdb;
+        $table_prefix = $wpdb->prefix;
+        $table_name = $table_prefix . "api_void_search_history";
+
+        $result = $wpdb->get_results("SELECT * FROM $table_name");
+        ob_start();
+        if ($result === null) {
+            echo "<h3>No data is stored</h3>";
+            return ob_get_clean();
+        }
+        ?>
+        <style>
+            :root {
+                --reputation-site-gap: 15px;
+                --reputation-site-col: 3;
+                --single-col-width: calc(calc(100% / var(--reputation-site-col)) - calc(calc(var(--reputation-site-gap) * calc(var(--reputation-site-col) - 1)) / var(--reputation-site-col)))
+            }
+
+            .recent_reputation_checks {
+                display: flex;
+                justify-content: space-between;
+                gap: var(--reputation-site-gap);
+            }
+
+            .reputation_site {
+                width: var(--single-col-width);
+                border: 1px solid lightgreen;
+                border-radius: 8px;
+            }
+        </style>
+        <div class="recent_reputation_checks">
+            <div class="reputation_site">
+                <div>
+                    <div class="reputation_domain_icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                            <path d="M320 464c8.8 0 16-7.2 16-16l0-288-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l256 0zM0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64z"/>
+                        </svg>
+                    </div>
+                    <div class="reputation_domain_name">just-fly.aero</div>
+                </div>
+                <div>
+                    <div class="reputation_domain_time">
+                        3 minutes ago
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php
+        return ob_get_clean();
 
     }
 };
