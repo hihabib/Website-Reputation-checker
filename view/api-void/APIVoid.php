@@ -106,19 +106,7 @@ new class {
         </div>
 
         <script>
-            if(location.search !== ""){
-                /**
-                 * @type HTMLInputElement
-                 */
-                const input = document.querySelector(`[name="domainSearch"]`);
-                input.value = location.search.split("?url=")[1];
 
-                /**
-                 * @type HTMLFormElement
-                 */
-                const form = document.querySelector('#api-void');
-                form.submit();
-            }
             /**
              * Create Table
              * @param title
@@ -219,6 +207,20 @@ new class {
                     createTable(result.error, result ?? {});
                 }
             });
+
+            if(location.search !== ""){
+                /**
+                 * @type HTMLInputElement
+                 */
+                const input = document.querySelector(`[name="domainSearch"]`);
+                input.value = location.search.split("?url=")[1];
+
+                /**
+                 * @type HTMLFormElement
+                 */
+                const form = document.querySelector('#api-void');
+                form.submit();
+            }
         </script>
         <?php
         return ob_get_clean();
