@@ -111,7 +111,7 @@ new class {
              * @param title
              * @param data
              */
-            async function createTable(title, data) {
+            function createTable(title, data) {
                 const container = document.createElement('div');
                 const heading = document.createElement('h2');
                 heading.textContent = title;
@@ -153,6 +153,7 @@ new class {
                 }
 
                 container.appendChild(table);
+
                 // remove loading effect
                 if (document.querySelector('#api-void input[type="submit"]').value !== "Search") {
                     document.querySelector('#api-void input[type="submit"]').setAttribute("value", "Search");
@@ -175,21 +176,34 @@ new class {
                 document.querySelector('#api-void input[type="submit"]').setAttribute("disabled", "");
 
                 const domain = e.target.domainSearch.value;
-                // call api
+                // call api-void
                 const res = await fetch("https://reportscammedfunds.com/wp-json/raw/v1/api-void?url=" + domain);
                 const result = await res.json();
 
+                // save url to db
+                const saveUrlResponse = await fetch("https://reportscammedfunds.com/wp-json/api-void/v1/save-search-url", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body:  JSON.stringify({
+                        url: domain
+                    })
+                });
+                const saveUrlResult = await saveUrlResponse.json();
+                console.log(saveUrlResult)
+
                 // create tables
                 if (result.error === undefined) {
-                    await createTable("Domain Age", result?.data?.report?.domain_age ?? {});
-                    await createTable("DNS Records - NS", result?.data?.report?.dns_records?.ns?.records ?? {});
-                    await createTable("DNS Records - MX", result?.data?.report?.dns_records?.mx?.records ?? {});
-                    await createTable("Security Checks", result?.data?.report?.security_checks ?? {});
-                    await createTable("Server Details", result?.data?.report?.server_details ?? {});
-                    await createTable("URL Parts", result?.data?.report?.url_parts ?? {});
-                    await createTable("Web Page", result?.data?.report?.web_page ?? {});
+                    createTable("Domain Age", result?.data?.report?.domain_age ?? {});
+                    createTable("DNS Records - NS", result?.data?.report?.dns_records?.ns?.records ?? {});
+                    createTable("DNS Records - MX", result?.data?.report?.dns_records?.mx?.records ?? {});
+                    createTable("Security Checks", result?.data?.report?.security_checks ?? {});
+                    createTable("Server Details", result?.data?.report?.server_details ?? {});
+                    createTable("URL Parts", result?.data?.report?.url_parts ?? {});
+                    createTable("Web Page", result?.data?.report?.web_page ?? {});
                 } else {
-                    await createTable(result.error, result ?? {});
+                    createTable(result.error, result ?? {});
                 }
             });
         </script>
@@ -209,19 +223,36 @@ new class {
         ]);
     }
 
+    /**
+     * Insert URL to db
+     * @param $data
+     * @return WP_Error|WP_HTTP_Response|WP_REST_Response
+     */
     public function save_recenter_search_api_void($data)
     {
+        // check is url provided or not
         if(empty($data['url'])){
             return new WP_Error('no_url', "No URL provided to save", ['status' => 400]);
         }
 
         global $wpdb;
+
+        // db table name
         $db_prefix = $wpdb -> prefix;
         $table_name = $db_prefix . "api_void_search_history";
-        $is_inserted = $wpdb -> insert($table_name, [
-                'url' => 'test2',
-                'time' => date("Y-m-d H:i:s")
-        ]);
-        return rest_ensure_response(['test' =>"$is_inserted"]);
+
+        // insert data
+        $data_to_save = [
+            'url' => 'test2',
+            'time' => date("Y-m-d H:i:s")
+        ];
+        $is_inserted = $wpdb -> insert($table_name, $data_to_save);
+
+        // rest response
+        if($is_inserted){
+            return rest_ensure_response($data_to_save);
+        } else {
+            return new WP_Error('not_saved', 'something went wrong', ['status' => 500]);
+        }
     }
 };
