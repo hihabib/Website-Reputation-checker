@@ -332,6 +332,7 @@ new class {
                 display: flex;
                 justify-content: space-between;
                 gap: var(--reputation-site-gap);
+                margin-bottom: 40px;
             }
 
             .reputation_site {
