@@ -243,7 +243,7 @@ new class {
 
         // insert data
         $data_to_save = [
-            'url' => 'test2',
+            'url' => $data['url'],
             'time' => date("Y-m-d H:i:s")
         ];
         $is_inserted = $wpdb -> insert($table_name, $data_to_save);
