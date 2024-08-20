@@ -333,6 +333,7 @@ new class {
                 justify-content: space-between;
                 gap: var(--reputation-site-gap);
                 margin-bottom: 40px;
+                flex-wrap: wrap;
             }
 
             .reputation_site {
