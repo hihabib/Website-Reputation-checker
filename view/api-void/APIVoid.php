@@ -219,7 +219,8 @@ new class {
         $db_prefix = $wpdb -> prefix;
         $table_name = $db_prefix . "api_void_search_history";
         $is_inserted = $wpdb -> insert($table_name, [
-                'url' => 'test'
+                'url' => 'test2',
+                'time' => date("Y-m-d H:i:s")
         ]);
         return rest_ensure_response(['test' =>"$is_inserted"]);
     }
