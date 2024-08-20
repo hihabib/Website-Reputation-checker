@@ -336,11 +336,13 @@ new class {
 
             .reputation_site {
                 width: var(--single-col-width);
-                border: 1px solid lightgreen;
+                border: 1px solid lightgrey;
                 border-radius: 8px;
+                padding: 10px
             }
             .reputation_domain_icon {
                 width: 15px;
+                margin-top: 8px;
             }
             div:has(>.reputation_domain_icon) {
                 display: flex;
