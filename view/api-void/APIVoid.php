@@ -8,6 +8,7 @@ new class {
     {
         add_action('rest_api_init', [$this, 'register_api_void_rest_api']);
         add_shortcode("API_VOID_VIEWS", [$this, 'api_void_short_code']);
+        add_shortcode("API_VOID_RECENT_CHECKS", [$this, 'recent_checks_shortcode']);
     }
 
     /**
