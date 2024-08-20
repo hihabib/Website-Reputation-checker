@@ -6,7 +6,6 @@ if (!defined("ABSPATH")) {
 new class {
     public function __construct()
     {
-        echo "testttttttttttttttttttttttttttt";
         add_shortcode("API_VOID_VIEWS", [$this, 'shortcode']);
     }
 
@@ -14,7 +13,7 @@ new class {
      * API Void output shortcode
      * @return false|string
      */
-    private function shortcode(){
+    public function shortcode(){
 
         ob_start();
         ?>
