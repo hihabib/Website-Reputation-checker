@@ -6,6 +6,7 @@ if (!defined("ABSPATH")) {
 new class {
     public function __construct()
     {
+        add_action('rest_api_init', [$this, 'register_api_void_rest_api']);
         add_shortcode("API_VOID_VIEWS", [$this, 'shortcode']);
     }
 
@@ -110,7 +111,7 @@ new class {
              * @param title
              * @param data
              */
-            function createTable(title, data) {
+            async function createTable(title, data) {
                 const container = document.createElement('div');
                 const heading = document.createElement('h2');
                 heading.textContent = title;
@@ -180,19 +181,39 @@ new class {
 
                 // create tables
                 if (result.error === undefined) {
-                    createTable("Domain Age", result?.data?.report?.domain_age ?? {});
-                    createTable("DNS Records - NS", result?.data?.report?.dns_records?.ns?.records ?? {});
-                    createTable("DNS Records - MX", result?.data?.report?.dns_records?.mx?.records ?? {});
-                    createTable("Security Checks", result?.data?.report?.security_checks ?? {});
-                    createTable("Server Details", result?.data?.report?.server_details ?? {});
-                    createTable("URL Parts", result?.data?.report?.url_parts ?? {});
-                    createTable("Web Page", result?.data?.report?.web_page ?? {});
+                    await createTable("Domain Age", result?.data?.report?.domain_age ?? {});
+                    await createTable("DNS Records - NS", result?.data?.report?.dns_records?.ns?.records ?? {});
+                    await createTable("DNS Records - MX", result?.data?.report?.dns_records?.mx?.records ?? {});
+                    await createTable("Security Checks", result?.data?.report?.security_checks ?? {});
+                    await createTable("Server Details", result?.data?.report?.server_details ?? {});
+                    await createTable("URL Parts", result?.data?.report?.url_parts ?? {});
+                    await createTable("Web Page", result?.data?.report?.web_page ?? {});
                 } else {
-                    createTable(result.error, result ?? {});
+                    await createTable(result.error, result ?? {});
                 }
             });
         </script>
         <?php
         return ob_get_clean();
+    }
+
+    /**
+     * endpoint: domain.com/wp-json/api-void/v1/save-search-url
+     * @return void
+     */
+    public function register_api_void_rest_api(){
+        register_rest_route("api-void/v1", "/save-search-url", [
+                'methods' => "POST",
+                "callback" => [$this, 'save_recenter_search_api_void'],
+                'permission_callback' =>  '__return_true'
+        ]);
+    }
+
+    public function save_recenter_search_api_void($data)
+    {
+        if(empty($data['url'])){
+            return new WP_Error('no_url', "No URL provided to save", ['status' => 400]);
+        }
+        return rest_ensure_response(['URL' => $data['url']]);
     }
 };
