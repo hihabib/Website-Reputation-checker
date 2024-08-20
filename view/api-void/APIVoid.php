@@ -214,6 +214,9 @@ new class {
         if(empty($data['url'])){
             return new WP_Error('no_url', "No URL provided to save", ['status' => 400]);
         }
-        return rest_ensure_response(['URL' => $data['url']]);
+
+        global $wpdb;
+        $db_prefix = $wpdb -> prefix;
+        return rest_ensure_response(['prefix' =>"$db_prefix"]);
     }
 };
