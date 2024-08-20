@@ -14,7 +14,8 @@ new class {
      * API Void output shortcode
      * @return false|string
      */
-    public function shortcode(){
+    public function shortcode()
+    {
 
         ob_start();
         ?>
@@ -23,6 +24,7 @@ new class {
             .verification_badge, .short-description {
                 display: none;
             }
+
             table {
                 width: 100%;
                 border-collapse: collapse;
@@ -59,6 +61,7 @@ new class {
                 border: 1px solid rgb(32, 92, 212);
                 border-radius: 10px;
             }
+
             #api-void input[type="submit"] {
                 padding-bottom: 12px;
                 border: none;
@@ -76,11 +79,13 @@ new class {
                 background: lightgray;
                 cursor: not-allowed;
             }
+
             .entry-title {
                 padding: 30px 0 10px 0;
                 display: block;
                 text-align: center;
             }
+
             .description {
                 width: 80%;
                 display: block;
@@ -88,9 +93,11 @@ new class {
                 text-align: center;
             }
         </style>
-        <p class="description">Check if a domain (e.g google.com) is blacklisted with this online domain reputation check tool.
+        <p class="description">Check if a domain (e.g google.com) is blacklisted with this online domain reputation
+            check tool.
             A free online domain risk score tool you can use to get reputation of a
-            domain. If you're concerned about a domain, this tool can help you find out if the domain is malicious. Simply enter the domain name in the form below and press the button.</p>
+            domain. If you're concerned about a domain, this tool can help you find out if the domain is malicious.
+            Simply enter the domain name in the form below and press the button.</p>
         <form id="api-void" action="<?php the_permalink(); ?>">
             <div>
                 <div>
@@ -172,7 +179,7 @@ new class {
              * This function will call createTable function to manipulate DOM
              * @returns {Promise<void>}
              */
-            async function processAPIVoid(domain){
+            async function processAPIVoid(domain) {
                 document.querySelector("#tableContainer").innerHTML = "";
                 // add loading effect
                 document.querySelector('#api-void input[type="submit"]').setAttribute("value", "Please Wait");
@@ -188,7 +195,7 @@ new class {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body:  JSON.stringify({
+                    body: JSON.stringify({
                         url: domain
                     })
                 });
@@ -208,6 +215,7 @@ new class {
                     createTable(result.error, result ?? {});
                 }
             }
+
             // submit form
             /**
              * @type HTMLFormElement
@@ -220,7 +228,7 @@ new class {
                 processAPIVoid(domain);
             });
 
-            if(location.search !== ""){
+            if (location.search !== "") {
                 /**
                  * @type HTMLInputElement
                  */
@@ -237,11 +245,12 @@ new class {
      * endpoint: domain.com/wp-json/api-void/v1/save-search-url
      * @return void
      */
-    public function register_api_void_rest_api(){
+    public function register_api_void_rest_api()
+    {
         register_rest_route("api-void/v1", "/save-search-url", [
-                'methods' => "POST",
-                "callback" => [$this, 'save_recenter_search_api_void'],
-                'permission_callback' =>  '__return_true'
+            'methods' => "POST",
+            "callback" => [$this, 'save_recenter_search_api_void'],
+            'permission_callback' => '__return_true'
         ]);
     }
 
@@ -253,28 +262,45 @@ new class {
     public function save_recenter_search_api_void($data)
     {
         // check is url provided or not
-        if(empty($data['url'])){
+        if (empty($data['url'])) {
             return new WP_Error('no_url', "No URL provided to save", ['status' => 400]);
         }
 
         global $wpdb;
 
         // db table name
-        $db_prefix = $wpdb -> prefix;
+        $db_prefix = $wpdb->prefix;
         $table_name = $db_prefix . "api_void_search_history";
 
-        // insert data
-        $data_to_save = [
-            'url' => $data['url'],
+        $is_updated = $wpdb->update($table_name, [
             'time' => date("Y-m-d H:i:s")
-        ];
-        $is_inserted = $wpdb -> insert($table_name, $data_to_save);
+        ], [
+            'url' => $data['url'],
+        ]);
 
-        // rest response
-        if($is_inserted){
-            return rest_ensure_response($data_to_save);
+
+        if (!$is_updated) {
+            // insert data
+            $data_to_save = [
+                'url' => $data['url'],
+                'time' => date("Y-m-d H:i:s")
+            ];
+            $is_inserted = $wpdb->insert($table_name, $data_to_save);
+            // rest response
+            if ($is_inserted) {
+                return rest_ensure_response($data_to_save);
+            } else {
+                return new WP_Error('not_saved', 'something went wrong', ['status' => 500]);
+            }
         } else {
-            return new WP_Error('not_saved', 'something went wrong', ['status' => 500]);
+            return rest_ensure_response(
+                [
+                    'updated' => 'true',
+                    'url' => $data['url'],
+                    'time' => date("Y-m-d H:i:s")
+                ]
+            );
         }
+
     }
 };
