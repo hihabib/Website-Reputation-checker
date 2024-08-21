@@ -100,16 +100,20 @@ new class {
                 border: 1px solid #18bc9c;
                 background-color: #e5ffe5;
             }
+
             .safe h3 {
                 background-color: #18bc9c;
                 color: white;
             }
+
             .safe h4 {
                 color: #18bc9c;
             }
+
             .safe .icon svg {
                 fill: #18bc9c;
             }
+
             .safe svg.danger {
                 display: none;
             }
@@ -119,16 +123,20 @@ new class {
                 border: 1px solid #f39c12;
                 background-color: #fffae5;
             }
+
             .danger h3 {
                 background-color: #f39c12;
                 color: white;
             }
+
             .danger h4 {
                 color: #f39c12;
             }
+
             .danger .icon svg {
                 fill: #f39c12;
             }
+
             .danger svg.safe {
                 display: none;
             }
@@ -138,21 +146,25 @@ new class {
                 border-radius: 8px;
                 overflow: hidden;
             }
+
             .summarized-decision h3 {
                 margin: 0;
                 padding: 15px 20px;
                 font-size: 22px;
             }
+
             .summarized-decision h4 {
                 margin: 15px 0 0 0;
                 padding: 15px 0;
                 font-size: 20px;
             }
+
             .summarized-decision p {
                 display: flex;
                 align-items: center;
                 gap: 10px;
             }
+
             .summarized-decision .icon svg {
                 position: relative;
                 width: 50px;
@@ -160,26 +172,32 @@ new class {
                 top: 5px;
                 border: none;
             }
+
             .decision-body {
                 padding: 0 20px;
             }
+
             .decision-body p {
                 margin: 10px 0 0 0;
                 padding-bottom: 20px;
             }
+
             .decision-body strong {
                 display: inline-block;
                 padding-bottom: 30px;
             }
+
             .decision-body .body-description {
                 display: flex;
                 flex-direction: column;
             }
+
             .decision-sub-header {
                 display: flex;
                 align-items: center;
                 gap: 10px;
             }
+
             #tableContainer {
                 display: flex;
                 flex-direction: column;
@@ -206,6 +224,25 @@ new class {
         </div>
 
         <script>
+            /**
+             * Format data for printing
+             * @param data
+             * @returns {{}}
+             */
+            function readyText(data) {
+                const formatedData = {};
+                if (!Array.isArray(data)) {
+                    Object.keys(data).forEach(key => {
+                        const splitKey = key.split('_');
+                        if (splitKey[0] === "is") {
+                            splitKey.shift();
+                        }
+                        const newKey = splitKey.join(" ");
+                        formatedData[newKey] = data[key] === false ? "no" : (data[key] === true ? "yes" : data[key]);
+                    })
+                }
+                return formatedData;
+            }
 
             /**
              * Create Table
@@ -213,6 +250,13 @@ new class {
              * @param data
              */
             function createTable(title, data) {
+                if(Array.isArray(data)) {
+                    data.forEach(datum => {
+                        createTable(title, datum);
+                    })
+                    return;
+                }
+                const dataObj = readyText(data);
                 const container = document.createElement('div');
                 const html = `
                 <div class="summarized-decision safe">
@@ -249,8 +293,9 @@ new class {
                       </div>
                     </div>
                     <div class="body-description">
-                      <p>Maybe the website has not much traffic but seems safe.</p>
-                      <strong>Here is why we made this classification</strong>
+                      ${Object.keys(dataObj).map(key => {
+                          return `<p><strong>${key}:</strong> ${dataObj[key]}</p>`;
+                }).join("\n")}
                     </div>
                   </div>
                 </div>
