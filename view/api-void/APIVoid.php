@@ -98,7 +98,7 @@ new class {
             /*Theme color*/
             .safe {
                 border: 1px solid #205CD4;
-                background-color: #dde4f8;
+                background-color: #ebeefa;
             }
 
             .safe h3 {
