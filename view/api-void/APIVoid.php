@@ -97,21 +97,21 @@ new class {
             /*API Result CSS*/
             /*Theme color*/
             .safe {
-                border: 1px solid #18bc9c;
-                background-color: #e5ffe5;
+                border: 1px solid #205CD4;
+                background-color: #acc1f3;
             }
 
             .safe h3 {
-                background-color: #18bc9c;
+                background-color: #205CD4;
                 color: white;
             }
 
             .safe h4 {
-                color: #18bc9c;
+                color: #205CD4;
             }
 
             .safe .icon svg {
-                fill: #18bc9c;
+                fill: #205CD4;
             }
 
             .safe svg.danger {
