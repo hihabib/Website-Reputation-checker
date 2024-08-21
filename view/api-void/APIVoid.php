@@ -164,7 +164,7 @@ new class {
                 </div>
                 `;
                 console.log(data);
-                container.appendChild(html);
+                container.innerHTML = html;
 
                 // remove loading effect
                 if (document.querySelector('#api-void input[type="submit"]').value !== "Search") {
