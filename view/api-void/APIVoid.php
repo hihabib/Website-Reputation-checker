@@ -93,6 +93,93 @@ new class {
                 margin: 0 auto;
                 text-align: center;
             }
+
+            /*API Result CSS*/
+            /*Theme color*/
+            .safe {
+                border: 1px solid #18bc9c;
+                background-color: #e5ffe5;
+            }
+            .safe h3 {
+                background-color: #18bc9c;
+                color: white;
+            }
+            .safe h4 {
+                color: #18bc9c;
+            }
+            .safe .icon svg {
+                fill: #18bc9c;
+            }
+            .safe svg.danger {
+                display: none;
+            }
+
+
+            .danger {
+                border: 1px solid #f39c12;
+                background-color: #fffae5;
+            }
+            .danger h3 {
+                background-color: #f39c12;
+                color: white;
+            }
+            .danger h4 {
+                color: #f39c12;
+            }
+            .danger .icon svg {
+                fill: #f39c12;
+            }
+            .danger svg.safe {
+                display: none;
+            }
+
+
+            .summarized-decision {
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            .summarized-decision h3 {
+                margin: 0;
+                padding: 15px 20px;
+                font-size: 22px;
+            }
+            .summarized-decision h4 {
+                margin: 15px 0 0 0;
+                padding: 15px 0;
+                font-size: 20px;
+            }
+            .summarized-decision p {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .summarized-decision .icon svg {
+                position: relative;
+                width: 50px;
+                height: 50px;
+                top: 5px;
+                border: none;
+            }
+            .decision-body {
+                padding: 0 20px;
+            }
+            .decision-body p {
+                margin: 10px 0 0 0;
+                padding-bottom: 20px;
+            }
+            .decision-body strong {
+                display: inline-block;
+                padding-bottom: 30px;
+            }
+            .decision-body .body-description {
+                display: flex;
+                flex-direction: column;
+            }
+            .decision-sub-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
         </style>
         <p class="description">Check if a domain (e.g google.com) is blacklisted with this online domain reputation
             check tool.
