@@ -208,7 +208,7 @@ new class {
             A free online domain risk score tool you can use to get reputation of a
             domain. If you're concerned about a domain, this tool can help you find out if the domain is malicious.
             Simply enter the domain name in the form below and press the button.</p>
-        <h5 style="text-align:center"><a style="color: black" href="https://reportscammedfunds.com/recent-checks/">View recent checks.</a></h5>
+        <h5 style="text-align:center"><a style="color: #205CD4" href="https://reportscammedfunds.com/recent-checks/">View recent checks.</a></h5>
         <form id="api-void" action="<?php the_permalink(); ?>">
             <div>
                 <div>
