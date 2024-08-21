@@ -122,46 +122,49 @@ new class {
              */
             function createTable(title, data) {
                 const container = document.createElement('div');
-                const heading = document.createElement('h2');
-                heading.textContent = title;
-                container.appendChild(heading);
+                const html = `
+                <div class="summarized-decision safe">
+                  <h3>${title}</h3>
+                  <div class="decision-body">
+                    <div class="decision-sub-header">
+                      <div class="icon">
+                        <svg
+                        class="safe"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M4 21h1V8H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2zM20 8h-7l1.122-3.368A2 2 0 0 0 12.225 2H12L7 7.438V21h11l3.912-8.596L22 12v-2a2 2 0 0 0-2-2z"
+                          ></path>
+                        </svg>
 
-                const table = document.createElement('table');
-                // Check if data is an array or object
-                if (Array.isArray(data)) {
-                    data.forEach((item, index) => {
-                        Object.keys(item).forEach(key => {
-                            const row = document.createElement('tr');
-
-                            const cellKey = document.createElement('th');
-                            cellKey.textContent = key;
-                            row.appendChild(cellKey);
-
-                            const cellValue = document.createElement('td');
-                            cellValue.textContent = item[key];
-                            row.appendChild(cellValue);
-
-                            table.appendChild(row);
-                        });
-                    });
-                } else {
-                    Object.keys(data).forEach(key => {
-                        const row = document.createElement('tr');
-
-                        const cellKey = document.createElement('th');
-                        cellKey.textContent = key;
-                        row.appendChild(cellKey);
-
-                        const cellValue = document.createElement('td');
-                        cellValue.textContent = JSON.stringify(data[key], null, 2);
-                        row.appendChild(cellValue);
-
-                        table.appendChild(row);
-                    });
-
-                }
-
-                container.appendChild(table);
+                        <svg
+                        class="danger"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"
+                          ></path>
+                        </svg>
+                      </div>
+                      <div>
+                        <h4>Potentially Legit</h4>
+                      </div>
+                    </div>
+                    <div class="body-description">
+                      <p>Maybe the website has not much traffic but seems safe.</p>
+                      <strong>Here is why we made this classification</strong>
+                    </div>
+                  </div>
+                </div>
+                `;
+                console.log(data);
+                container.appendChild(html);
 
                 // remove loading effect
                 if (document.querySelector('#api-void input[type="submit"]').value !== "Search") {
@@ -314,7 +317,7 @@ new class {
         $table_prefix = $wpdb->prefix;
         $table_name = $table_prefix . "api_void_search_history";
 
-        $result = $wpdb->get_results("SELECT * FROM $table_name ORDER BY time DESC");
+        $result = $wpdb->get_results("SELECT * FROM $table_name ORDER BY time DESC LIMIT 100");
         ob_start();
         if ($result === null) {
             echo "<h3>No data is stored</h3>";
