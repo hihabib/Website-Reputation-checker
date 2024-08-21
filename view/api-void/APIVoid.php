@@ -261,36 +261,36 @@ new class {
                 <div class="summarized-decision safe">
                   <h3>${title}</h3>
                   <div class="decision-body">
-                    <div class="decision-sub-header">
-                      <div class="icon">
-                        <svg
-                        class="safe"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M4 21h1V8H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2zM20 8h-7l1.122-3.368A2 2 0 0 0 12.225 2H12L7 7.438V21h11l3.912-8.596L22 12v-2a2 2 0 0 0-2-2z"
-                          ></path>
-                        </svg>
+<!--                    <div class="decision-sub-header">-->
+<!--                      <div class="icon">-->
+<!--                        <svg-->
+<!--                        class="safe"-->
+<!--                          xmlns="http://www.w3.org/2000/svg"-->
+<!--                          width="24"-->
+<!--                          height="24"-->
+<!--                          viewBox="0 0 24 24"-->
+<!--                        >-->
+<!--                          <path-->
+<!--                            d="M4 21h1V8H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2zM20 8h-7l1.122-3.368A2 2 0 0 0 12.225 2H12L7 7.438V21h11l3.912-8.596L22 12v-2a2 2 0 0 0-2-2z"-->
+<!--                          ></path>-->
+<!--                        </svg>-->
 
-                        <svg
-                        class="danger"
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div>
-                        <h4>Potentially Legit</h4>
-                      </div>
-                    </div>
+<!--                        <svg-->
+<!--                        class="danger"-->
+<!--                          xmlns="http://www.w3.org/2000/svg"-->
+<!--                          width="24"-->
+<!--                          height="24"-->
+<!--                          viewBox="0 0 24 24"-->
+<!--                        >-->
+<!--                          <path-->
+<!--                            d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"-->
+<!--                          ></path>-->
+<!--                        </svg>-->
+<!--                      </div>-->
+<!--                      <div>-->
+<!--                        <h4>Potentially Legit</h4>-->
+<!--                      </div>-->
+<!--                    </div>-->
                     <div class="body-description">
                       ${Object.keys(dataObj).map(key => {
                           return `<p><strong>${key}:</strong> ${dataObj[key]}</p>`;
