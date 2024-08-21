@@ -209,7 +209,8 @@ new class {
             A free online domain risk score tool you can use to get reputation of a
             domain. If you're concerned about a domain, this tool can help you find out if the domain is malicious.
             Simply enter the domain name in the form below and press the button.</p>
-        <h5 style="text-align:center"><a style="color: #205CD4" href="https://reportscammedfunds.com/recent-checks/">View recent checks.</a></h5>
+        <h5 style="text-align:center"><a style="color: #205CD4" href="https://reportscammedfunds.com/recent-checks/">View
+                recent checks.</a></h5>
         <form id="api-void" action="<?php the_permalink(); ?>">
             <div>
                 <div>
@@ -511,8 +512,8 @@ new class {
                                 <path d="M320 464c8.8 0 16-7.2 16-16l0-288-80 0c-17.7 0-32-14.3-32-32l0-80L64 48c-8.8 0-16 7.2-16 16l0 384c0 8.8 7.2 16 16 16l256 0zM0 64C0 28.7 28.7 0 64 0L229.5 0c17 0 33.3 6.7 45.3 18.7l90.5 90.5c12 12 18.7 28.3 18.7 45.3L384 448c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64z"/>
                             </svg>
                         </div>
-                        <div class="reputation_domain_name"><a
-                                    href="https://reportscammedfunds.com/website-reputation-checker/?url=<?php echo $website_data->url; ?>"><?php echo $website_data->url; ?></a>
+                        <div class="reputation_domain_name"><a style="color: #4C84E1"
+                                                               href="https://reportscammedfunds.com/website-reputation-checker/?url=<?php echo $website_data->url; ?>"><?php echo $website_data->url; ?></a>
                         </div>
                     </div>
                     <div>
@@ -528,6 +529,11 @@ new class {
 
     }
 
+    /**
+     * Time formating function
+     * @param $datetime
+     * @return string
+     */
     public function time_ago($datetime)
     {
         $currentTime = new DateTime();
