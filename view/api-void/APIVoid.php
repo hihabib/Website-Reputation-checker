@@ -184,7 +184,6 @@ new class {
 
             .decision-body strong {
                 display: inline-block;
-                padding-bottom: 30px;
             }
 
             .decision-body .body-description {
