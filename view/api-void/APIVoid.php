@@ -237,7 +237,11 @@ new class {
                             splitKey.shift();
                         }
                         const newKey = splitKey.join(" ");
-                        formatedData[newKey] = data[key] === false ? "no" : (data[key] === true ? "yes" : data[key]);
+                        data[key] !== "" && (
+                            formatedData[newKey] = data[key] === false ? "no" : (
+                                data[key] === true ? "yes" : data[key]
+                            )
+                        );
                     })
                 }
                 return formatedData;
@@ -249,7 +253,7 @@ new class {
              * @param data
              */
             function createTable(title, data) {
-                if(Array.isArray(data)) {
+                if (Array.isArray(data)) {
                     data.forEach(datum => {
                         createTable(title, datum);
                     })
@@ -293,7 +297,7 @@ new class {
 <!--                    </div>-->
                     <div class="body-description">
                       ${Object.keys(dataObj).map(key => {
-                          return `<p><strong>${key}:</strong> ${dataObj[key]}</p>`;
+                    return `<p><strong>${key}:</strong> ${dataObj[key]}</p>`;
                 }).join("\n")}
                     </div>
                   </div>
