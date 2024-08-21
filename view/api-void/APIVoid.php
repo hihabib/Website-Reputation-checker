@@ -180,6 +180,11 @@ new class {
                 align-items: center;
                 gap: 10px;
             }
+            #tableContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 50px;
+            }
         </style>
         <p class="description">Check if a domain (e.g google.com) is blacklisted with this online domain reputation
             check tool.
