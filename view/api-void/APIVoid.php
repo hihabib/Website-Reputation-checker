@@ -97,6 +97,7 @@ new class {
             /*API Result CSS*/
             /*Theme color*/
             .safe {
+                color: black;
                 border: 1px solid #205CD4;
                 background-color: #ebeefa;
             }
